@@ -85,7 +85,7 @@ namespace SpaceExample1 {
         }
     };
 
-        int main() {
+        int mainExample1() {
         R a, b(1, 2, 3, 4.5, 5);
         std::cout << "Test !\n";
         std::cout << "Size for Base " << sizeof(Base) << std::endl;
