@@ -8,88 +8,91 @@ namespace SpaceExample3 {
 // машина, пасажирський транспорт і автобус.
 //
 
+#include <iostream>
+#include <string>
 
-    class Car {
+    using namespace std;
+
+    class Entity {
     protected:
-        string marka;
-        float power;
-        int numberOfWheels;
+        string name;
+        int age;
     public:
-        Car() : marka("Neoplan"), power(5.2f), numberOfWheels(6) {
-        }
-        Car(string m, float p, int nw) : marka(m), power(p), numberOfWheels(nw) {
-        }
-        string getMarka() { return marka; }
-        void setMarka(string m) { marka = m; }
-        float getPower() {
-            return power;
-        }
-        void setPower(float p) {
-            power = p;
-        }
-        int getNumberOfWheels() {
-            return numberOfWheels;
-        }
-        void setNumberOfWheels(int n) {
-            numberOfWheels = n;
-        }
-        string toString() {
-            string r = marka + "\t" + to_string(power) + "\t" + to_string(numberOfWheels) + "\t";
-            return r;
+        Entity(string _name, int _age) : name(_name), age(_age) {}
+        virtual ~Entity() {}
+        virtual void printInfo() {
+            cout << "Name: " << name << endl;
+            cout << "Age: " << age << endl;
         }
     };
 
-    class PassengerTransport {
+    class Parent : virtual public Entity {
     protected:
-        int flightNumber;
-        int numberOfPassengerSeats;
+        string occupation;
     public:
-        PassengerTransport() : flightNumber(101), numberOfPassengerSeats(45) {}
-        PassengerTransport(int f, int n) : flightNumber(f), numberOfPassengerSeats(n) {}
-        int  getFlightNumber() { return flightNumber; }
-        void setFlightNumber(int f) { flightNumber = f; }
-        int getNumberOfPassengerSeats() { return numberOfPassengerSeats; }
-        void setnumberOfPassengerSeats(int n) { numberOfPassengerSeats = n; }
-        string toString() {
-            string r = to_string(flightNumber) + "\t" + to_string(numberOfPassengerSeats) + "\t";
-            return r;
-        }
-    };
-    class AutoBus : public Car, public  PassengerTransport
-    {
-        string busRoute;
-    public:
-        AutoBus() : busRoute("Kyiv-Chernivci") {}
-        AutoBus(string m, float p, int nw, int f, int n, string bs)
-            : Car(m, p, nw), PassengerTransport(f, n), busRoute(bs) {}
-        string getbusRoute() {
-            return busRoute;
-        }
-        void setbusRoute(string bs) { busRoute = bs; }
-
-        string toString() {
-            string r = Car::toString() + PassengerTransport::toString() + busRoute;
-            return r;
+        Parent(string _name, int _age, string _occupation) : Entity(_name, _age), occupation(_occupation) {}
+        virtual ~Parent() {}
+        virtual void printInfo() {
+            Entity::printInfo();
+            cout << "Occupation: " << occupation << endl;
         }
     };
 
-    int mainExample3()
-    {
-        AutoBus def;
-        AutoBus lvCh("Iveko", 6.2f, 6, 301, 40, "Lviv-Chernivci");
-        AutoBus* pVnCn = new AutoBus();
-        pVnCn->setMarka("Ikarus");
-        pVnCn->setPower(7.2f);
-        pVnCn->setNumberOfWheels(6);
-        pVnCn->setFlightNumber(403);
-        pVnCn->setnumberOfPassengerSeats(42);
-        pVnCn->setbusRoute("Vinnicya-Chernivci");
+    class Mother : virtual public Parent {
+    protected:
+        string maternalLineage;
+    public:
+        Mother(string _name, int _age, string _occupation, string _maternalLineage) : Entity(_name, _age), Parent(_name, _age, _occupation), maternalLineage(_maternalLineage) {}
+        virtual ~Mother() {}
+        virtual void printInfo() {
+            Parent::printInfo();
+            cout << "Maternal Lineage: " << maternalLineage << endl;
+        }
+    };
 
-        cout << def.toString() << endl;
-        cout << lvCh.toString() << endl;
-        cout << pVnCn->toString() << endl;
+    class Father : virtual public Parent {
+    protected:
+        string paternalLineage;
+    public:
+        Father(string _name, int _age, string _occupation, string _paternalLineage) : Entity(_name, _age), Parent(_name, _age, _occupation), paternalLineage(_paternalLineage) {}
+        virtual ~Father() {}
+        virtual void printInfo() {
+            Parent::printInfo();
+            cout << "Paternal Lineage: " << paternalLineage << endl;
+        }
+    };
+
+    class Daughter : public Mother, public Father {
+    public:
+        Daughter(string _name, int _age, string _occupation, string _maternalLineage, string _paternalLineage) : Entity(_name, _age), Parent(_name, _age, _occupation), Mother(_name, _age, _occupation, _maternalLineage), Father(_name, _age, _occupation, _paternalLineage) {}
+        virtual ~Daughter() {}
+        virtual void printInfo() {
+            Mother::printInfo();
+            Father::printInfo();
+        }
+    };
+
+    int mainExample3() {
+        Entity entity("John", 40);
+        entity.printInfo();
+        cout << endl;
+
+        Parent parent("Mary", 35, "Teacher");
+        parent.printInfo();
+        cout << endl;
+
+        Mother mother("Alice", 60, "Nurse", "Smith");
+        mother.printInfo();
+        cout << endl;
+
+        Father father("Bob", 65, "Engineer", "Johnson");
+        father.printInfo();
+        cout << endl;
+
+        Daughter daughter("Lily", 15, "Student", "Smith", "Johnson");
+        daughter.printInfo();
+        cout << endl;
+
         return 0;
     }
-
-
 }
