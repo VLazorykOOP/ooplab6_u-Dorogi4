@@ -85,13 +85,13 @@ namespace SpaceExample1 {
         }
     };
 
-        int mainExample1() {
+    int mainExample1() {
         R a, b(1, 2, 3, 4.5, 5);
         std::cout << "Test !\n";
         std::cout << "Size for Base " << sizeof(Base) << std::endl;
         std::cout << "Size for D1 " << sizeof(D1) << std::endl;
-       std::cout << "Size for D1V " << sizeof(D1V) << std::endl;
-            std::cout << "Size for D2 " << sizeof(D2) << std::endl;
+        std::cout << "Size for D1V " << sizeof(D1V) << std::endl;
+        std::cout << "Size for D2 " << sizeof(D2) << std::endl;
         std::cout << "Size for D2V " << sizeof(D2V) << std::endl;
         std::cout << "Size for D12 " << sizeof(D12) << std::endl;
         std::cout << "Size for D12V " << sizeof(D12V) << std::endl;
@@ -104,3 +104,5 @@ namespace SpaceExample1 {
         b.showDat();
 
         return 0;
+    }
+}
